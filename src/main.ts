@@ -6,11 +6,14 @@ import * as mongoose from 'mongoose'
 async function bootstrap() {
 
   // 链接mongo数据库
-  await mongoose.connect('mongodb://localhost:27017/',
+  await mongoose.connect('mongodb://localhost/nest-blog-api',
     {
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
+      // dbName: "test"
       useNewUrlParser: true,
-      useUnifiedTopology: true,
-      dbName: "test"
+      useFindAndModify: false,
+      useCreateIndex: true
     });
 
   const app = await NestFactory.create(AppModule);
