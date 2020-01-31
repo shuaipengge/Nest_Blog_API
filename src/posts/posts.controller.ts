@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiProperty } from '@nestjs/swagger';
 import { PostModel } from './posts.model';
+import { IsNotEmpty } from 'class-validator'
 
 class CreatePostDto {
     @ApiProperty({ description: '帖子标题', example: '帖子标题1' })
+    @IsNotEmpty({message: '请填写标题'})  // 判断值是否为空
     title: string
     @ApiProperty({ description: '帖子内容', example: '帖子内容1' })
     content: string
@@ -13,6 +15,7 @@ class CreatePostDto {
 
 class UpdatePostDto {
     @ApiProperty({ description: '帖子标题', example: '帖子标题2' })
+    @IsNotEmpty({message: '请填写标题'})  // 判断值是否为空
     title: string
     @ApiProperty({ description: '帖子内容', example: '帖子内容2' })
     content: string
