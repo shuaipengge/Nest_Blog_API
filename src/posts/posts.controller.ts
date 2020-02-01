@@ -1,9 +1,11 @@
 import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiProperty } from '@nestjs/swagger';
+import { ApiTags, ApiProperty, ApiOperation } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator'
 import { InjectModel } from 'nestjs-typegoose';
 import {Post as PostSchema} from './posts.model'
 import { ModelType } from '@typegoose/typegoose/lib/types';
+
+import { Crud } from 'nestjs-mongoose-crud'
 
 class CreatePostDto {
     @ApiProperty({ description: '帖子标题', example: '帖子标题1' })
@@ -25,12 +27,27 @@ class UpdatePostDto {
     tag: string
 }
 
+@Crud({
+    model:PostSchema,
+    routes: {
+        find:{
+            decorators: [
+                ApiOperation({ summary: '博客列表' })
+            ]
+        },
+        create:{
+            dto: CreatePostDto
+        }
+    }
+})
+
 @Controller('posts')
 @ApiTags('帖子')
 export class PostsController {
     // 依赖注入
-    constructor(@InjectModel(PostSchema) private readonly postModel: ModelType<PostSchema>){}
+    constructor(@InjectModel(PostSchema) private readonly model: ModelType<PostSchema>){}
 
+    /*
     @Get()
     @ApiOperation({ summary: '博客列表' })
     async index() {
@@ -75,5 +92,6 @@ export class PostsController {
             success: true
         }
     }
+    */
 
 }
