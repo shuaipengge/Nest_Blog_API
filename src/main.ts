@@ -1,21 +1,9 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import * as mongoose from 'mongoose'
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
-
-  // 链接mongo数据库
-  await mongoose.connect('mongodb://localhost/nest-blog-api',
-    {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
-      // dbName: "test"
-      useNewUrlParser: true,
-      useFindAndModify: false,
-      useCreateIndex: true
-    });
 
   const app = await NestFactory.create(AppModule);
 
